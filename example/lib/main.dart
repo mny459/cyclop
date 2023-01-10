@@ -83,6 +83,15 @@ class _MainScreenState extends State<MainScreen> {
                 'Select the background & appbar colors',
                 style: textTheme.headline6?.copyWith(color: bodyTextColor),
               ),
+              ColorView(
+                child: Icon(Icons.color_lens),
+                color: backgroundColor,
+                swatches: swatches,
+                onColorChanged: (value) =>
+                    setState(() => backgroundColor = value),
+                onSwatchesChanged: (newSwatches) =>
+                    setState(() => swatches = newSwatches),
+              ),
               _buildButtons(),
               Center(child: Image.asset('images/img.png')),
             ],
