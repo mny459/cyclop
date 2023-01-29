@@ -1,3 +1,4 @@
+import 'package:example/app_color_view.dart';
 import 'package:flutter/material.dart';
 import 'package:cyclop/cyclop.dart';
 
@@ -83,7 +84,7 @@ class _MainScreenState extends State<MainScreen> {
                 'Select the background & appbar colors',
                 style: textTheme.headline6?.copyWith(color: bodyTextColor),
               ),
-              ColorView(
+              AppColorView(
                 child: Icon(Icons.color_lens),
                 color: backgroundColor,
                 swatches: swatches,
