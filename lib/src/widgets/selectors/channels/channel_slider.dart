@@ -96,19 +96,26 @@ class ChannelSliderTrack extends SliderTrackShape with BaseSliderTrackShape {
 
   const ChannelSliderTrack(this.selectedColor, this.colors);
 
+  List<double> _impliedStops() {
+    assert(colors.length >= 2, 'colors list must have at least two colors');
+    final separation = 1.0 / (colors.length - 1);
+    return List<double>.generate(
+      colors.length,
+      (int index) => index * separation,
+      growable: false,
+    );
+  }
+
   @override
-  void paint(
-    PaintingContext context,
-    Offset offset, {
-    required RenderBox parentBox,
-    required SliderThemeData sliderTheme,
-    required Animation<double> enableAnimation,
-    required TextDirection textDirection,
-    required Offset thumbCenter,
-    bool isDiscrete = false,
-    bool isEnabled = false,
-    double additionalActiveTrackHeight = 2,
-  }) {
+  void paint(PaintingContext context, Offset offset,
+      {required RenderBox parentBox,
+      required SliderThemeData sliderTheme,
+      required Animation<double> enableAnimation,
+      required Offset thumbCenter,
+      Offset? secondaryOffset,
+      bool isEnabled = false,
+      bool isDiscrete = false,
+      required TextDirection textDirection}) {
     assert(sliderTheme.disabledActiveTrackColor != null);
     assert(sliderTheme.disabledInactiveTrackColor != null);
     assert(sliderTheme.activeTrackColor != null);
@@ -152,12 +159,10 @@ class ChannelSliderTrack extends SliderTrackShape with BaseSliderTrackShape {
 
     final shapeRect = RRect.fromLTRBAndCorners(
       trackRect.left - thumbRadius,
-      (textDirection == TextDirection.ltr)
-          ? trackRect.top - (additionalActiveTrackHeight / 2)
-          : trackRect.top,
+      (textDirection == TextDirection.ltr) ? trackRect.top : trackRect.top,
       trackRect.right + thumbRadius,
       (textDirection == TextDirection.ltr)
-          ? trackRect.bottom + (additionalActiveTrackHeight / 2)
+          ? trackRect.bottom
           : trackRect.bottom,
       topLeft: (textDirection == TextDirection.ltr)
           ? activeTrackRadius
@@ -175,15 +180,5 @@ class ChannelSliderTrack extends SliderTrackShape with BaseSliderTrackShape {
 
     context.canvas.drawRRect(shapeRect, leftTrackPaint);
     context.canvas.drawRRect(shapeRect, rightTrackPaint);
-  }
-
-  List<double> _impliedStops() {
-    assert(colors.length >= 2, 'colors list must have at least two colors');
-    final separation = 1.0 / (colors.length - 1);
-    return List<double>.generate(
-      colors.length,
-      (int index) => index * separation,
-      growable: false,
-    );
   }
 }

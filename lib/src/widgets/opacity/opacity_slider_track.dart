@@ -17,18 +17,15 @@ class OpacitySliderTrack extends SliderTrackShape with BaseSliderTrackShape {
           );
 
   @override
-  void paint(
-    PaintingContext context,
-    Offset offset, {
-    required RenderBox parentBox,
-    required SliderThemeData sliderTheme,
-    required Animation<double> enableAnimation,
-    required TextDirection textDirection,
-    required Offset thumbCenter,
-    bool isDiscrete = false,
-    bool isEnabled = false,
-    double additionalActiveTrackHeight = 2,
-  }) {
+  void paint(PaintingContext context, ui.Offset offset,
+      {required RenderBox parentBox,
+      required SliderThemeData sliderTheme,
+      required Animation<double> enableAnimation,
+      required ui.Offset thumbCenter,
+      ui.Offset? secondaryOffset,
+      bool isEnabled = false,
+      bool isDiscrete = false,
+      required ui.TextDirection textDirection}) {
     final trackRect = getPreferredRect(
       parentBox: parentBox,
       offset: offset,
@@ -66,12 +63,10 @@ class OpacitySliderTrack extends SliderTrackShape with BaseSliderTrackShape {
 
     final shapeRect = RRect.fromLTRBAndCorners(
       trackRect.left - thumbRadius,
-      (textDirection == TextDirection.ltr)
-          ? trackRect.top - (additionalActiveTrackHeight / 2)
-          : trackRect.top,
+      (textDirection == TextDirection.ltr) ? trackRect.top : trackRect.top,
       trackRect.right + thumbRadius,
       (textDirection == TextDirection.ltr)
-          ? trackRect.bottom + (additionalActiveTrackHeight / 2)
+          ? trackRect.bottom
           : trackRect.bottom,
       topLeft: (textDirection == TextDirection.ltr)
           ? activeTrackRadius
